@@ -15,7 +15,6 @@ class NewVisitorTest(unittest.TestCase):
 	def check_for_row_in_list_table(self, row_text):
 		table = self.browser.find_element_by_id('id_list_table')
 		rows = table.find_elements_by_tag_name('tr')
-		print(rows)
 		self.assertIn(row_text, [row.text for row in rows])
 
 	def test_can_start_a_list_and_retrive_it_later(self):
@@ -33,12 +32,12 @@ class NewVisitorTest(unittest.TestCase):
 		self.assertEqual(inputbox.get_attribute('placeholder'), 'Enter a to-do item')
 		inputbox.send_keys('Item 1')
 		inputbox.send_keys(Keys.ENTER)
-		time.sleep(0.02)
+		time.sleep(0.2)
 		self.check_for_row_in_list_table('1: Item 1')
 		inputbox = self.browser.find_element_by_id('id_new_item')
 		inputbox.send_keys('Item 2')
 		inputbox.send_keys(Keys.ENTER)
-		time.sleep(0.02)
+		time.sleep(0.2)
 		self.check_for_row_in_list_table('2: Item 2')
 
 		self.fail('Finish the test!')
