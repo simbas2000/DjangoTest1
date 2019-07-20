@@ -27,10 +27,10 @@ class HomePageTest(TestCase):
 		request = HttpRequest()
 		request.method = 'POST'
 		request.POST['item_text'] = 'A new list item'
-		
+
 		#Exercise
 		response = home_page(request)
-		
+
 		#Assert
 		self.assertEqual(Item.objects.count(), 1)
 		new_item = Item.objects.first()
@@ -41,10 +41,10 @@ class HomePageTest(TestCase):
 		request = HttpRequest()
 		request.method = 'POST'
 		request.POST['item_text'] = 'A new list item'
-		
+
 		#Exercise
 		response = home_page(request)
-		
+
 		#Assert
 		self.assertEqual(response.status_code, 302)
 		self.assertEqual(response['location'], '/')
