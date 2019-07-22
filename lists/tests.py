@@ -9,6 +9,31 @@ import re
 def remove_csrf_tag(text):
     return re.sub(r'<[^>]*csrfmiddlewaretoken[^>]*>', '', text)
 
+
+class NewListTest(TestCase):
+
+    def test_saving_a_POST_request(self):
+        #Setup
+        self.client.post(
+            '/lists/new',
+            data={'item_text': 'A new list item'}
+        )
+        #Assert
+        self.assertEqual(Item.objects.count(), 1)
+        new_item = Item.objects.first()
+        self.assertEqual(new_item.text, 'A new list item')
+
+    def test_redirects_after_POST(self):
+        #Setup
+        response = self.client.post(
+            '/lists/new',
+            data={'item_text': 'A new list item'}
+        )
+        #Assert
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response['location'], '/lists/the-only-list-in-the-world/')
+
+
 class ListViewTest(TestCase):
     
     def test_uses_list_template(self):
@@ -36,38 +61,6 @@ class HomePageTest(TestCase):
         response = home_page(request)
         expected_html = render(request, 'home.html').content.decode()
         self.assertEqual(remove_csrf_tag(response.content.decode()), remove_csrf_tag(expected_html))
-
-    def test_home_page_can_save_a_POST_request(self):
-        #Setup
-        request = HttpRequest()
-        request.method = 'POST'
-        request.POST['item_text'] = 'A new list item'
-
-        #Exercise
-        response = home_page(request)
-
-        #Assert
-        self.assertEqual(Item.objects.count(), 1)
-        new_item = Item.objects.first()
-        self.assertEqual(new_item.text, 'A new list item')
-
-    def test_home_page_redirects_after_POST(self):
-        #Setup
-        request = HttpRequest()
-        request.method = 'POST'
-        request.POST['item_text'] = 'A new list item'
-
-        #Exercise
-        response = home_page(request)
-
-        #Assert
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response['location'], '/lists/the-only-list-in-the-world/')
-
-    def test_home_page_only_saves_items_when_necessary(self):
-        request = HttpRequest()
-        home_page(request)
-        self.assertEqual(Item.objects.count(), 0)
 
 
 class ItemModelTest(TestCase):
