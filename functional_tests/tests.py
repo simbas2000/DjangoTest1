@@ -61,6 +61,6 @@ class NewVisitorTest(LiveServerTestCase):
 
         page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('1: Item 1', page_text)
-        self.assertIn('l2_i1')
+        self.assertIn('l2_i1', page_text)
 
 
