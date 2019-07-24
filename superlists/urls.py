@@ -21,4 +21,5 @@ urlpatterns = [
     #path('admin/', admin.site.urls),
     path('', views.home_page, name='home'),
     path('lists/', include('lists.urls')),
+    path('test/', views.testing_bootstrap)##test!!!!!
 ]

@@ -19,3 +19,6 @@ def add_item(request, list_id):
     Item.objects.create(text=request.POST['item_text'], list=list_)
     return redirect('/lists/{}/'.format(list_.id))
 
+#BOTTSTRAP FUN TEST!!!
+def testing_bootstrap(request):
+    return render(request, 'test.html')
