@@ -68,7 +68,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('l2_i1')
         inputbox.send_keys(Keys.ENTER)
-        time.sleep(0.2)
+        time.sleep(0.8)
 
         user2_list_url = self.browser.current_url
         self.assertRegex(user2_list_url, '/lists/.+')
