@@ -1,0 +1,12 @@
+[Unit]
+Description=gunicorn daemon for Django project staging-list
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/sites/djangotest-staging.simonebaselice.it/source
+ExecStart=/home/ubuntu/.local/bin/gunicorn --bind unix:/tmp/djangotest-staging.simonebaselice.it.socket superlists.wsgi:application
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

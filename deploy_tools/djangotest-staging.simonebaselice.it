@@ -1,0 +1,13 @@
+server {
+	listen 80;
+	server_name djangotest-staging.simonebaselice.it;
+
+	location /static {
+		alias /home/ubuntu/sites/djangotest-staging.simonebaselice.it/static;
+	}
+
+	location / {
+		proxy_set_header Host $host;
+		proxy_pass http://unix:/tmp/djangotest-staging.simonebaselice.it.socket;
+	}
+}
