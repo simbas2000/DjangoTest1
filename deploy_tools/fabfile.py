@@ -58,6 +58,17 @@ def _update_settings(c: Connection, source_folder, sitename):
 
 def _update_virtualenv(c: Connection, source_folder):
     virtualenv_folder = source_folder + '/../virtualenv'
+    if not _exists(c, virtualenv_folder + '/bin/pip'):
+        c.run('virtualenv --python=python3 {}'.format(virtualenv_folder))
+    c.run('{}/bin/pip install -r {}/requirements.txt'.format(virtualenv_folder, source_folder))
+
+
+def _update_static_files(c: Connection, source_folder):
+    c.run('cd {} && ../virtualenv/bin/python3 manage.py collectstatic --noinput'.format(source_folder))
+
+
+def _update_database(c: Connection, source_folder):
+    c.run('cd {} && ../virtualenv/bin/python3 manage.py migrate --noinput'.format(source_folder))
 
 
 @task
