@@ -14,3 +14,13 @@ class ItemForm(forms.models.ModelForm):
         error_messages = {
             'text': {'required': EMPTY_LIST_ERROR}
         }
+
+    def is_valid(self):
+        is_valid = super().is_valid()
+        if is_valid:
+            self.fields['text'].widget = forms.fields.TextInput(
+                attrs={'placeholder': 'Enter a to-do item', 'class': 'form-control is-valid'})
+        else:
+            self.fields['text'].widget = forms.fields.TextInput(
+                attrs={'placeholder': 'Enter a to-do item', 'class': 'form-control is-invalid'})
+        return is_valid

@@ -17,7 +17,7 @@ class NewVisitorTest(FunctionalTest):
         time.sleep(0.02)  # seems needed to avoid bug with selenium (?)
 
         # User enter items in list using inputbox
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         self.assertEqual(inputbox.get_attribute('placeholder'), 'Enter a to-do item')
         inputbox.send_keys('Item 1')
         inputbox.send_keys(Keys.ENTER)
@@ -25,7 +25,7 @@ class NewVisitorTest(FunctionalTest):
         user_list_url = self.browser.current_url
         self.assertRegex(user_list_url, '/lists/.+')
         self.check_for_row_in_list_table('1: Item 1')
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         inputbox.send_keys('Item 2')
         inputbox.send_keys(Keys.ENTER)
         time.sleep(0.2)
@@ -39,7 +39,7 @@ class NewVisitorTest(FunctionalTest):
         self.assertNotIn('1: Item 1', page_text)
         self.assertNotIn('2: Item 2', page_text)
 
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         inputbox.send_keys('l2_i1')
         inputbox.send_keys(Keys.ENTER)
         time.sleep(0.4)

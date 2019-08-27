@@ -13,12 +13,12 @@
             <div class="col-md-6 offset-md-3 jumbotron">
                <div class="text-center">
                   <h1>{% block header_text %}{% endblock %}</h1>
-                  <form method="POST" action="{% block form_action %}{% endblock %}">
+                  <form method="POST" action="{% block form_action %}{% endblock %}" novalidate>
                      {{  form.text }}
 {#                     <input name="item_text" id="id_new_item" type="text" class="form-control {% if error %}is-invalid{% endif %}" placeholder="Enter a to-do item" />#}
                      <div class="invalid-feedback">
                         <div class="float-left">
-                           {{ error }}
+                           {{ form.text.errors }}
                         </div>
                      </div>
                      {% csrf_token %}
