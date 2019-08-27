@@ -24,3 +24,7 @@ class ItemForm(forms.models.ModelForm):
             self.fields['text'].widget = forms.fields.TextInput(
                 attrs={'placeholder': 'Enter a to-do item', 'class': 'form-control is-invalid'})
         return is_valid
+
+    def save(self, for_list):
+        self.instance.list = for_list
+        return super().save()
