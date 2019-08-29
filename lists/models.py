@@ -13,4 +13,5 @@ class Item(models.Model):
     list = models.ForeignKey(List, models.CASCADE, default=None)
 
     class Meta:
+        ordering = ('id',)
         unique_together = ('list', 'text')
