@@ -7,12 +7,41 @@
 </head>
 <body>
    <div id="qunit"></div>
-   <div id="qunit-fixture"></div>
+   <div id="qunit-fixture">
+      <form class='user_input_form'>
+         <input id="input1" name="text" type="text" class="form-control" placeholder="Enter a to-do item" />
+         <div class="invalid-feedback">
+            <div class="float-left">
+                <label name="error_msg">ERRORiwsw!</label>
+            </div>
+         </div>
+      </form>
+   </div>
+
+   <script src="http://code.jquery.com/jquery.min.js"></script>
    <script src="qunit.js"></script>
+   <script src="../list.js"></script>
    <script>
-       /*global $, test, equal */
-       test("smoke test", function () {
-           equal(1, 1, "Maths works!");
+       var c_name = '.user_input_form'
+
+       QUnit.test("errors should not appear after page loads", function ( assert ) {
+          lvalidator_init();
+          assert.ok($(c_name).find('input').hasClass("is-invalid")===false);
+       });
+
+       QUnit.test("errors should be hidden on keypress", function ( assert ) {
+          lvalidator_init();
+          $(c_name).find('input').addClass("is-invalid");
+          $(c_name).find('input').val("aa");
+          $(c_name).find('input').trigger('keypress');
+          assert.ok($(c_name).find('input').hasClass("is-invalid")===false);
+       });
+
+       QUnit.test("errors should occur on blur if input text is null", function ( assert ) {
+          lvalidator_init();
+          $(c_name).find('input').trigger('keypress');
+          $(c_name).find('input').blur();
+          assert.ok($(c_name).find('input').hasClass("is-invalid")===true);
        });
    </script>
 </body>
